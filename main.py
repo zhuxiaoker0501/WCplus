@@ -7,30 +7,30 @@
 from threading import Thread
 from multiprocessing import Process
 import multiprocessing
-from l1l11_wcplus_ import l1ll1l_wcplus_
-from cmp.l111l_wcplus_ import l11ll_wcplus_
+from socketio import socketIo
+from cmp.mitmproxy import proxyMaster
 import webbrowser, time
 
-def l111l_wcplus_():
+def processFunc():
     """
     :return:
     """
-    l11ll_wcplus_()
+    proxyMaster()
 
 
-def l1llll_wcplus_():
+def threadFunc():
     """
-    :return: 
+    :return:
     """
-    from app.api.l1lll1_wcplus_ import l1111_wcplus_
+    from app.api.prepare_data_for_front_end import PrepareDataForFrontEnd
     while True:
-        l1111_wcplus_().send()
+        PrepareDataForFrontEnd().send()
         time.sleep(3)
 
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    Process(target=l111l_wcplus_).start()
-    Thread(target=l1llll_wcplus_).start()
+    Process(target=processFunc).start()
+    Thread(target=threadFunc).start()
     webbrowser.open('http://localhost:5000')
-    l1ll1l_wcplus_()
+    socketIo()

@@ -6,10 +6,10 @@
 """
 为已经采集的公众号页面提供数据支持
 """
-from instance import l1l1l11l1_wcplus_
-from cmp.db.l1ll11l11_wcplus_ import l1l11llll_wcplus_
-from utils.base import l1lll1111_wcplus_
-from utils.l11ll1111_wcplus_ import l11llll11_wcplus_
+from instance import crawler_log_table_instance
+from cmp.db.mongodb import DB
+from utils.base import prettyPrint
+from utils.string_handle import encryptString
 
 class l11ll1l1l_wcplus_:
 
@@ -23,11 +23,11 @@ class l11ll1l1l_wcplus_:
         l11lll111_wcplus_ = []
         l11lll1ll_wcplus_ = 0
         l11ll11l1_wcplus_ = 0
-        l1l1l1lll_wcplus_ = l1l1l11l1_wcplus_.get()
+        l1l1l1lll_wcplus_ = crawler_log_table_instance.get()
         cnt = 1
         for i in l1l1l1lll_wcplus_:
             l11lll1ll_wcplus_ += 1
-            l11ll111l_wcplus_ = l1l11llll_wcplus_(i['nickname'])
+            l11ll111l_wcplus_ = DB(i['nickname'])
             l11ll1lll_wcplus_ = {}
             l11ll1l11_wcplus_ = l11ll111l_wcplus_.count()
             l11ll11l1_wcplus_ += l11ll1l11_wcplus_
@@ -48,7 +48,7 @@ class l11ll1l1l_wcplus_:
         :return: 返回一个公众号的全部文章列表
         """
         from pymongo import DESCENDING
-        l11ll111l_wcplus_ = l1l11llll_wcplus_(l11l1llll_wcplus_['nickname'])
+        l11ll111l_wcplus_ = DB(l11l1llll_wcplus_['nickname'])
         l11lll111_wcplus_ = []
         cnt = 1
         l11lll11l_wcplus_ = l11ll111l_wcplus_.table.find().sort('p_date', DESCENDING)[int(l11l1llll_wcplus_['start']):int(l11l1llll_wcplus_['end'])]
@@ -75,7 +75,7 @@ class l11ll1l1l_wcplus_:
             item['date'] = a['p_date'].timestamp()
             item['title'] = a['title']
             item['url'] = a['content_url']
-            item['md5'] = l11llll11_wcplus_(a['content_url'])
+            item['md5'] = encryptString(a['content_url'])
             cnt += 1
             l11lll111_wcplus_.append(item)
 

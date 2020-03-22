@@ -16,12 +16,12 @@ class DeleteGZH:
         self.nickname = nickname
 
     def l11llll1l_wcplus_(self):
-        from cmp.db.l1ll11l11_wcplus_ import l11llllll_wcplus_
-        l11llllll_wcplus_.drop_collection(self.nickname)
+        from cmp.db.mongodb import mongo_db
+        mongo_db.drop_collection(self.nickname)
 
     def l11lllll1_wcplus_(self):
-        from instance import l1l1l11l1_wcplus_
-        l1l1l11l1_wcplus_.delete(nickname=self.nickname)
+        from instance import crawler_log_table_instance
+        crawler_log_table_instance.delete(nickname=self.nickname)
 
     def l1l111111_wcplus_(self):
         """
@@ -34,8 +34,8 @@ class DeleteGZH:
         """
         :return: 从索引中删除
         """
-        from app.search.index import l1l1lll1l_wcplus_
-        l1l1lll1l_wcplus_(self.nickname).delete()
+        from app.search.index import Index
+        Index(self.nickname).delete()
 
     def run(self):
         try:
@@ -47,5 +47,5 @@ class DeleteGZH:
             from utils.base import logger
             logger.warning('删除数据遇到一个警告')
 
-        from utils.front import l1l11111l_wcplus_
-        l1l11111l_wcplus_(self.nickname, '删除完成 刷新页面公众号消失', 'success')
+        from utils.front import sendNotification
+        sendNotification(self.nickname, '删除完成 刷新页面公众号消失', 'success')

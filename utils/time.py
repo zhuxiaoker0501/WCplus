@@ -5,7 +5,7 @@
 # Embedded file name: utils\time.py
 
 
-def l1lll1l11ll_wcplus_():
+def getBaiduTime():
     """
     :return: 获取百度服务器时间
     """
@@ -16,14 +16,14 @@ def l1lll1l11ll_wcplus_():
         l1lll1ll111_wcplus_ = time.mktime(datetime.datetime.strptime(date[5:25], '%d %b %Y %H:%M:%S').timetuple()) + 28800
         return int(l1lll1ll111_wcplus_)
     except:
-        from instance import l1_wcplus_
-        if l1_wcplus_ == 'win':
+        from instance import os_version
+        if os_version == 'win':
             return
         import time
         return time.time()
 
 
 if __name__ == '__main__':
-    l1lll1ll111_wcplus_ = l1lll1l11ll_wcplus_()
+    l1lll1ll111_wcplus_ = getBaiduTime()
     if l1lll1ll111_wcplus_:
         print(l1lll1ll111_wcplus_)

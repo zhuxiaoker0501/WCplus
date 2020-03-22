@@ -11,7 +11,7 @@ import re
 from cmp.db.es.config import search_template
 from copy import deepcopy
 from cmp.db.es import l11l111ll1_wcplus_
-from utils.base import logger, l1lll1111_wcplus_
+from utils.base import logger, prettyPrint
 
 class l1lll11lll_wcplus_:
 
@@ -113,7 +113,7 @@ class l1lll11lll_wcplus_:
 
 
 if __name__ == '__main__':
-    from utils.base import l1lll1111_wcplus_
+    from utils.base import prettyPrint
     s = l1lll11lll_wcplus_('教育', ['gzh_阿拉升学说'], 'gzh_article')
     data = s.search()
-    l1lll1111_wcplus_(data)
+    prettyPrint(data)

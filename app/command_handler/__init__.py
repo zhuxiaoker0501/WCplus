@@ -15,12 +15,12 @@ def execute_command(command):
     :param command:
     :return: 参数使用 ' - ' 间隔
     """
-    from utils.front import l1l11111l_wcplus_
+    from utils.front import sendNotification
     cmd = command.split(' - ')[0]
     l111llll1_wcplus_ = command.split(' - ')[1:]
     if cmd not in commands:
-        l1l11111l_wcplus_(command, '不支持的命令', _type='error')
+        sendNotification(command, '不支持的命令', _type='error')
     else:
-        l1l11111l_wcplus_(command, '开始执行', _type='success')
+        sendNotification(command, '开始执行', _type='success')
         from threading import Thread
         (Thread(target=commands[cmd].run, args=(cmd, l111llll1_wcplus_))).start()

@@ -23,19 +23,19 @@ d：数据写入es es根据id跳过已经存在的文档
 情况2 一个公众号的数据更新之后，需要准备索引数据的速度足够快 创建GZHIndex对象 调用index方法
 情况3 对于3.0 已经采集的数据建立索引 先将html文档解析成文本放入数据库 再调用 index方法
 """
-from cmp.db.l1ll11l11_wcplus_ import l1l11llll_wcplus_
+from cmp.db.mongodb import DB
 from app.search.config import l1llll1lll_wcplus_
 from utils.base import logger
 from cmp.db.es.index import l1l1ll111_wcplus_
 import time
 
-class l1l1lll1l_wcplus_:
-    l1llll11ll_wcplus_ = 'gzh_'
+class Index:
+    prefix = 'gzh_'
     doc_type = 'gzh_article'
 
     def __init__(self, nickname):
         self.nickname = nickname.lower()
-        self.l1lll1lll1_wcplus_ = nickname
+        self.ori_nickname = nickname
 
     def l1llll111l_wcplus_(self):
         """
@@ -51,20 +51,20 @@ class l1l1lll1l_wcplus_:
         """
         return l1l1ll111_wcplus_.l1llll1111_wcplus_(l1lll1ll1l_wcplus_)
 
-    def l1llll1l1l_wcplus_(self, num=None):
+    def getArticleList(self, num=None):
         """
         :param num: 如果是具体数字则 准备最近发布的num篇文章
         :return: 根据公众号的昵称准备该公众号的所有或者前n篇文章的全部数据 如果某些字段没有就使用默认值
         """
         from pymongo import DESCENDING
-        l1llll1l11_wcplus_ = []
-        col = l1l11llll_wcplus_(self.l1lll1lll1_wcplus_)
+        article_list = []
+        col = DB(self.ori_nickname)
         if num:
-            l11111l1l_wcplus_ = col.table.find().sort('p_date', DESCENDING)()[:num]
+            article_datas = col.table.find().sort('p_date', DESCENDING)()[:num]
         else:
-            l11111l1l_wcplus_ = col.get()
+            article_datas = col.get()
         begin_time = time.time()
-        for doc in l11111l1l_wcplus_:
+        for doc in article_datas:
             item = {}
             doc['id'] = doc['content_url']
             for key in l1llll1lll_wcplus_:
@@ -73,10 +73,10 @@ class l1l1lll1l_wcplus_:
                 else:
                     item[key] = -2
 
-            l1llll1l11_wcplus_.append(item)
+            article_list.append(item)
 
         logger.info('解析文章文本用时 %.3f' % (time.time() - begin_time))
-        return l1llll1l11_wcplus_
+        return article_list
 
     def index(self, num=None):
         """
@@ -85,8 +85,8 @@ class l1l1lll1l_wcplus_:
         如果index_check之后的结果和数据库中的文档数量一致 直接跳过 不index
         如果数据和结果不一样 全文再次更新索引
         """
-        l1llll1l11_wcplus_ = self.l1llll1l1l_wcplus_(num=num)
-        index_doc = l1l1ll111_wcplus_(self.l1llll11ll_wcplus_ + self.nickname, l1llll1l11_wcplus_, self.doc_type)
+        l1llll1l11_wcplus_ = self.getArticleList(num=num)
+        index_doc = l1l1ll111_wcplus_(self.prefix + self.nickname, l1llll1l11_wcplus_, self.doc_type)
         index_doc.create_index()
         index_doc.l1llll11l1_wcplus_()
 
@@ -94,4 +94,4 @@ class l1l1lll1l_wcplus_:
         """
         :return: 删除该index
         """
-        l1l1ll111_wcplus_.l1l1lll11_wcplus_(self.l1llll11ll_wcplus_ + self.nickname)
+        l1l1ll111_wcplus_.l1l1lll11_wcplus_(self.prefix + self.nickname)

@@ -3,7 +3,7 @@
 # Decompiled from: Python 3.6.6 (default, Mar 29 2019, 00:03:27) 
 # [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
 # Embedded file name: app\export\excel.py
-from cmp.db.l1ll11l11_wcplus_ import l1l11llll_wcplus_
+from cmp.db.mongodb import DB
 import pandas as pd, os
 from config import l1ll1ll1l_wcplus_
 
@@ -15,7 +15,7 @@ class l111l1ll1_wcplus_:
             os.makedirs(l1ll1ll1l_wcplus_)
 
     def l111l1l1l_wcplus_(self):
-        l111l11ll_wcplus_ = l1l11llll_wcplus_(self.nickname).get()
+        l111l11ll_wcplus_ = DB(self.nickname).get()
         return l111l11ll_wcplus_
 
     def l111l1lll_wcplus_(self, l111l11ll_wcplus_):
@@ -52,15 +52,15 @@ class l111l1ll1_wcplus_:
         writer.save()
 
     def run(self):
-        from utils.front import l1l11111l_wcplus_
+        from utils.front import sendNotification
         l111l11ll_wcplus_ = self.l111l1l1l_wcplus_()
         df = self.l111l1lll_wcplus_(l111l11ll_wcplus_)
         self.l111l1l11_wcplus_(df)
-        l1l11111l_wcplus_(self.nickname, '导出Excel完成', 'success')
+        sendNotification(self.nickname, '导出Excel完成', 'success')
         import subprocess
-        from instance import l1_wcplus_
-        if l1_wcplus_ == 'osx':
+        from instance import os_version
+        if os_version == 'osx':
             subprocess.call(['open', l1ll1ll1l_wcplus_])
         else:
-            if l1_wcplus_ == 'win':
+            if os_version == 'win':
                 subprocess.call(['explorer', l1ll1ll1l_wcplus_.replace('/', '\\')])

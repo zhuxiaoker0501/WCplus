@@ -6,14 +6,14 @@
 """
 定义全局对象
 """
-from cmp.db.l1ll11l11_wcplus_ import l1l11llll_wcplus_
-l1l1l11l1_wcplus_ = l1l11llll_wcplus_('crawler_log')
-l11l1l1ll1_wcplus_ = l1l11llll_wcplus_('req_data')
-from app.l1ll11ll1_wcplus_.l1l1l1111_wcplus_ import l1111_wcplus_
-rd = l1111_wcplus_()
+from cmp.db.mongodb import DB
+crawler_log_table_instance = DB('crawler_log')
+req_data_table_instance = DB('req_data')
+from app.crawl_manag.params_handle import HandleParam
+rd = HandleParam()
 from app.api.settings import l11l111ll_wcplus_
 l1l1111ll_wcplus_ = l11l111ll_wcplus_()
-from app.l1ll11ll1_wcplus_ import l1ll1ll1ll_wcplus_
-l11ll11lll_wcplus_ = l1ll1ll1ll_wcplus_()
-from utils.base import l1ll1l1llll_wcplus_
-l1_wcplus_ = l1ll1l1llll_wcplus_()
+from app.crawl_manag import CrawlManage
+crawler_manager = CrawlManage()
+from utils.base import osVersion
+os_version = osVersion()

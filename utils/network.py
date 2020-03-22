@@ -5,18 +5,18 @@
 # Embedded file name: utils\network.py
 
 
-def l111lllll_wcplus_():
+def getLocalIp():
     """
     :return: 获取局域网IP地址
     """
-    from instance import l1_wcplus_
-    if l1_wcplus_ == 'win':
+    from instance import os_version
+    if os_version == 'win':
         import socket
         ip = socket.gethostbyname(socket.gethostname())
         return ip
-    if l1_wcplus_ == 'osx':
+    if os_version == 'osx':
         return '终端运行 ifconfig 查看'
 
 
 if __name__ == '__main__':
-    print(l111lllll_wcplus_())
+    print(getLocalIp())

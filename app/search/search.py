@@ -39,9 +39,9 @@ class l1ll111l1_wcplus_:
         """
         :return: 获取es中可用索引
         """
-        from app.search.index import l1l1lll1l_wcplus_
+        from app.search.index import Index
         from cmp.db.es.index import l1l1ll111_wcplus_
-        index_list = l1l1lll1l_wcplus_.l1llll1111_wcplus_('gzh_*')
+        index_list = Index.l1llll1111_wcplus_('gzh_*')
         l11l11lll_wcplus_ = []
         for index in index_list:
             l1lll1l111_wcplus_ = index.split('_')[-1]

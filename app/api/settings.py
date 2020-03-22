@@ -6,8 +6,8 @@
 """
 提供数据设置API
 """
-from cmp.db.l1ll11l11_wcplus_ import l1l11llll_wcplus_
-l11l11ll1_wcplus_ = l1l11llll_wcplus_('settings')
+from cmp.db.mongodb import DB
+setting_table_instance = DB('settings')
 
 class l11l111ll_wcplus_:
 
@@ -18,21 +18,21 @@ class l11l111ll_wcplus_:
         """
         :return: 获取所有的设置字段{}
         """
-        sd = l11l11ll1_wcplus_.get()
-        l11l11l11_wcplus_ = {}
+        sd = setting_table_instance.get()
+        datas_dict = {}
         for s in sd:
-            l11l11l11_wcplus_[s['key']] = s['value']
+            datas_dict[s['key']] = s['value']
 
         from cmp.protect import Passport
-        from utils.network import l111lllll_wcplus_
-        l11l11l11_wcplus_['uuid'] = Passport.l11l111l1_wcplus_()
-        l11l11l1l_wcplus_ = Passport.l1l11l111_wcplus_()
-        if not l11l11l1l_wcplus_:
-            l11l11l11_wcplus_['passport'] = 0
+        from utils.network import getLocalIp
+        datas_dict['uuid'] = Passport.getUUid()
+        passport_expire_time = Passport.examplePassport()
+        if not passport_expire_time:
+            datas_dict['passport'] = 0
         else:
-            l11l11l11_wcplus_['passport'] = l11l11l1l_wcplus_
-        l11l11l11_wcplus_['proxy_server'] = l111lllll_wcplus_()
-        return l11l11l11_wcplus_
+            datas_dict['passport'] = passport_expire_time
+        datas_dict['proxy_server'] = getLocalIp()
+        return datas_dict
 
     def insert(self, l11l1111l_wcplus_):
         """
@@ -46,7 +46,7 @@ class l11l111ll_wcplus_:
             item['value'] = l11l1111l_wcplus_[key]
             l11l11111_wcplus_.append(item)
 
-        l11l11ll1_wcplus_.insert('key', l11l11111_wcplus_)
+        setting_table_instance.insert('key', l11l11111_wcplus_)
 
     def delete(self, key, all=False):
         """
@@ -55,6 +55,6 @@ class l11l111ll_wcplus_:
         :return:
         """
         if all:
-            l11l11ll1_wcplus_.delete()
+            setting_table_instance.delete()
         else:
-            l11l11ll1_wcplus_.delete(key=key)
+            setting_table_instance.delete(key=key)

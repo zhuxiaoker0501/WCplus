@@ -9,7 +9,7 @@
 import requests, time
 from instance import l1l1111ll_wcplus_
 from utils.base import logger
-from utils.front import l1l111lll_wcplus_
+from utils.front import popUps
 
 def l1ll1l1111_wcplus_(source=0):
     """
@@ -27,16 +27,16 @@ def l1lll1l1111_wcplus_():
         l1lll1l111l_wcplus_ = settings['proxy']
     else:
         logger.logger('请先设置代理IP')
-        l1l111lll_wcplus_('没有设置代理IP请先设置 设置之后请验证 确保返回的只有一个代理IP 例如 123.234.345.12:9808', '代理设置', 'error')
+        popUps('没有设置代理IP请先设置 设置之后请验证 确保返回的只有一个代理IP 例如 123.234.345.12:9808', '代理设置', 'error')
         return '127.0.0.1:1080'
         try:
             l1ll11ll11_wcplus_ = requests.get(l1lll1l111l_wcplus_).text
             if '白名单' in l1ll11ll11_wcplus_:
-                l1l111lll_wcplus_('即将使用真实IP' + l1ll11ll11_wcplus_, '获取代理IP出错', 'error')
+                popUps('即将使用真实IP' + l1ll11ll11_wcplus_, '获取代理IP出错', 'error')
                 time.sleep(1)
                 return '127.0.0.1:1080'
         except:
-            l1l111lll_wcplus_('请设置正确的代理IP 设置后请验证保证可返回一个代理IP 如果真实IP可用将使用真实IP进行采集', '代理设置', 'error')
+            popUps('请设置正确的代理IP 设置后请验证保证可返回一个代理IP 如果真实IP可用将使用真实IP进行采集', '代理设置', 'error')
             return '127.0.0.1:1080'
         else:
             while '请求' in l1ll11ll11_wcplus_:
